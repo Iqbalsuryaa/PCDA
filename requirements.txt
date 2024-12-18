@@ -1,7 +1,6 @@
-numpy
-opencv-python
-scikit-learn
-matplotlib
-seaborn
 streamlit
+numpy
+opencv-python-headless
 scikit-image
+scikit-learn
+pickle-mixin
