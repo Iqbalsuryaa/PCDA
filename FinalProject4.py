@@ -4,14 +4,13 @@ import numpy as np
 import pickle
 from skimage.feature import hog
 from PIL import Image
-import os
 
 # Load model SVM
 with open('model_svm.pkl', 'rb') as file:
     model_svm = pickle.load(file)
 
 # Kategori ikan
-kategori = ['Discus_fish', 'Angle_fish', 'Surgeon_fish', 'Clown_fish', 'Butterfly_fish']
+kategori = ['Clown_fish', 'Angle_fish', 'Surgeon_fish']
 
 def preprocess_image(image):
     # Resize image
