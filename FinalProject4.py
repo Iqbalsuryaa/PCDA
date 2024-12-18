@@ -10,22 +10,22 @@ with open('model_svm.pkl', 'rb') as file:
     model_svm = pickle.load(file)
 
 # Kategori ikan
-kategori = ['Clown_fish', 'Angle_fish', 'Surgeon_fish']
+kategori = ['Clown_fish', 'Angle_fish', 'Surgeon_fish', 'Discus_fish', 'Butterfly_fish']
 
 def preprocess_image(image):
-    # Resize image
+    # Resize image to 50x50
     image_resized = cv2.resize(image, (50, 50))
 
     # Convert to HSV
     hsv = cv2.cvtColor(image_resized, cv2.COLOR_BGR2HSV)
 
-    # Extract HOG features
+    # Extract HOG features from grayscale image
     features_hog, _ = hog(cv2.cvtColor(image_resized, cv2.COLOR_BGR2GRAY),
                           orientations=9, pixels_per_cell=(8, 8),
                           cells_per_block=(2, 2), visualize=True,
                           block_norm='L2-Hys')
 
-    # Combine HSV and HOG features
+    # Flatten HSV and HOG features and combine them
     features = np.hstack([hsv.flatten(), features_hog])
     return features
 
