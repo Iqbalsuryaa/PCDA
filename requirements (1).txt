@@ -1,0 +1,17 @@
+streamlit
+pillow
+numpy
+pandas
+scikit-learn
+matplotlib
+tensorflow
+folium
+streamlit-folium
+seaborn
+geopandas
+joblib
+geopy
+scipy
+branca
+statsmodels
+openpyxl
