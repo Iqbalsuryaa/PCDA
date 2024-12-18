@@ -11,7 +11,7 @@ with open('model_svm.pkl', 'rb') as file:
     model_svm = pickle.load(file)
 
 # Kategori ikan
-kategori = ['Clown_fish', 'Angle_fish', 'Surgeon_fish']
+kategori = ['Discus_fish', 'Angle_fish', 'Surgeon_fish', 'Clown_fish', 'Butterfly_fish']
 
 def preprocess_image(image):
     # Resize image
