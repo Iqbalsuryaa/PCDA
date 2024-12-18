@@ -54,10 +54,6 @@ def visualisasi_distribusi_data(label, kategori):
     plt.title("Distribusi Data")
     st.pyplot()
 
-# Load model SVM
-with open('model_svm.pkl', 'rb') as file:
-    model_svm = pickle.load(file)
-
 # Muat dan preprocess data
 data, label = preprocess_data(base_dir, kategori)
 
@@ -104,12 +100,15 @@ if uploaded_file is not None:
     # Baca gambar yang diunggah
     image = Image.open(uploaded_file)
     image = np.array(image)
+    
+    # Convert RGB ke BGR jika diperlukan oleh OpenCV
+    image_bgr = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
     # Tampilkan gambar
     st.image(image, caption='Gambar yang Diupload', use_column_width=True)
 
     # Prediksi
     if st.button("Prediksi"):
-        features = preprocess_image(image)
+        features = preprocess_image(image_bgr)  # Gunakan image_bgr
         prediksi = model_svm.predict([features])[0]
         st.write(f"Prediksi: {kategori[prediksi]}")
