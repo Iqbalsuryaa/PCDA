@@ -1,15 +1,18 @@
 import streamlit as st
-import numpy as np
 import cv2
-from sklearn.svm import SVC
-from PIL import Image
+import numpy as np
 import pickle
 from skimage.feature import hog
+from PIL import Image
+import os
+
+# Load model SVM
+with open('model_svm.pkl', 'rb') as file:
+    model_svm = pickle.load(file)
 
 # Kategori ikan
 kategori = ['Clown_fish', 'Angle_fish', 'Surgeon_fish']
 
-# Fungsi untuk memproses gambar
 def preprocess_image(image):
     # Resize image
     image_resized = cv2.resize(image, (50, 50))
@@ -27,9 +30,10 @@ def preprocess_image(image):
     features = np.hstack([hsv.flatten(), features_hog])
     return features
 
-# Load model SVM
-with open('model_svm.pkl', 'rb') as file:
-    model_svm = pickle.load(file)
+def predict(image):
+    features = preprocess_image(image)
+    prediction = model_svm.predict([features])[0]
+    return kategori[prediction]
 
 # Streamlit UI
 st.title("Aplikasi Klasifikasi Ikan Laut")
@@ -53,6 +57,5 @@ if uploaded_file is not None:
 
     # Prediksi
     if st.button("Prediksi"):
-        features = preprocess_image(image)
-        prediction = model_svm.predict([features])[0]
-        st.write(f"Prediksi: {kategori[prediction]}")
+        prediksi = predict(image)
+        st.write(f"Prediksi: {prediksi}")
