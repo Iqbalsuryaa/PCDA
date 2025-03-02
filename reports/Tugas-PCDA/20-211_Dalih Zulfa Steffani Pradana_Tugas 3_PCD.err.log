@@ -1,0 +1,81 @@
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/usr/local/lib/python3.11/dist-packages/nbclient/client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/usr/local/lib/python3.11/dist-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/usr/local/lib/python3.11/dist-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Load the image in grayscale
+image = cv2.imread('/content/kucing citra.jpeg', cv2.IMREAD_GRAYSCALE)
+
+# Gradient in the x-direction
+gradient_x = cv2.Sobel(image, cv2.CV_64F, 1, 0, ksize=3)  # Sobel derivative in X direction
+
+# Gradient in the y-direction
+gradient_y = cv2.Sobel(image, cv2.CV_64F, 0, 1, ksize=3)  # Sobel derivative in Y direction
+
+# Magnitude of the gradient
+gradient_magnitude = cv2.magnitude(gradient_x, gradient_y)
+
+# Convert gradients to 8-bit for visualization
+gradient_x = cv2.convertScaleAbs(gradient_x)
+gradient_y = cv2.convertScaleAbs(gradient_y)
+gradient_magnitude = cv2.convertScaleAbs(gradient_magnitude)
+
+# Plot the results
+plt.figure(figsize=(12, 6))
+
+plt.subplot(1, 4, 1)
+plt.imshow(image, cmap='gray')
+plt.title('Original Image')
+plt.axis('off')
+
+plt.subplot(1, 4, 2)
+plt.imshow(gradient_x, cmap='gray')
+plt.title('Gradient X')
+plt.axis('off')
+
+plt.subplot(1, 4, 3)
+plt.imshow(gradient_y, cmap='gray')
+plt.title('Gradient Y')
+plt.axis('off')
+
+plt.subplot(1, 4, 4)
+plt.imshow(gradient_magnitude, cmap='gray')
+plt.title('Gradient Magnitude')
+plt.axis('off')
+
+plt.tight_layout()
+plt.show()
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31merror[0m                                     Traceback (most recent call last)
+[0;32m<ipython-input-1-e81319afd139>[0m in [0;36m<cell line: 0>[0;34m()[0m
+[1;32m      7[0m [0;34m[0m[0m
+[1;32m      8[0m [0;31m# Gradient in the x-direction[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 9[0;31m [0mgradient_x[0m [0;34m=[0m [0mcv2[0m[0;34m.[0m[0mSobel[0m[0;34m([0m[0mimage[0m[0;34m,[0m [0mcv2[0m[0;34m.[0m[0mCV_64F[0m[0;34m,[0m [0;36m1[0m[0;34m,[0m [0;36m0[0m[0;34m,[0m [0mksize[0m[0;34m=[0m[0;36m3[0m[0;34m)[0m  [0;31m# Sobel derivative in X direction[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     10[0m [0;34m[0m[0m
+[1;32m     11[0m [0;31m# Gradient in the y-direction[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31merror[0m: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/deriv.cpp:419: error: (-215:Assertion failed) !_src.empty() in function 'Sobel'
+
+
